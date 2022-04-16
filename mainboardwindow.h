@@ -16,7 +16,7 @@ public:
     explicit MainBoardWindow(QWidget *parent = nullptr);
     explicit MainBoardWindow(QWidget *parent = nullptr,int level=0);
     ~MainBoardWindow();
-
+    void init(int level=0);
 private:
     Ui::MainBoardWindow *ui;
 };

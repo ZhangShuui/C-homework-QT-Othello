@@ -38,7 +38,9 @@
     <property name="styleSheet">
      <string notr="true">QLabel{border-image:url(:/pic/back2.jpg)}
 QLabel{background-color:rgb(217, 215, 218)}
-QLabel{font: 18pt &quot;Bradley Hand ITC&quot;;font: 19pt &quot;幼圆&quot;;}</string>
+QLabel{font: 18pt &quot;Bradley Hand ITC&quot;;font: 19pt &quot;幼圆&quot;;}
+QLabel{border-top-left-radius:15px}
+QLabel{border-top-right-radius:15px}</string>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:24pt; font-weight:600; color:#ffffff;&quot;&gt;黑白棋&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -55,7 +57,9 @@ QLabel{font: 18pt &quot;Bradley Hand ITC&quot;;font: 19pt &quot;幼圆&quot;;}</
     </property>
     <property name="styleSheet">
      <string notr="true">QAbstractButton{background-color:rgb(217, 215, 218)}
-QAbstractButton{font: 19pt &quot;幼圆&quot;;}</string>
+QAbstractButton{font: 19pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:15px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     </property>
     <property name="text">
      <string>开始游戏</string>
@@ -72,10 +76,15 @@ QAbstractButton{font: 19pt &quot;幼圆&quot;;}</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QAbstractButton{background-color:rgb(217, 215, 218)}
-QAbstractButton{font: 19pt &quot;幼圆&quot;;}</string>
+QAbstractButton{font: 19pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:15px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     </property>
     <property name="text">
      <string>退出</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -99,7 +108,9 @@ QAbstractButton{font: 19pt &quot;幼圆&quot;;}</string>
     <property name="styleSheet">
      <string notr="true">QLabel{border-image:url(:/pic/back2.jpg)}
 QLabel{background-color:rgb(217, 215, 218)}
-QLabel{font: 20pt &quot;Bradley Hand ITC&quot;;}</string>
+QLabel{font: 20pt &quot;Bradley Hand ITC&quot;;}
+QLabel{border-bottom-left-radius:15px}
+QLabel{border-bottom-right-radius:15px}</string>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:28pt; font-weight:600; color:#ffffff;&quot;&gt;Othello&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -111,7 +122,7 @@ QLabel{font: 20pt &quot;Bradley Hand ITC&quot;;}</string>
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

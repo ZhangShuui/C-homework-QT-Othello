@@ -3,5 +3,6 @@
         <file>pic/background.jpeg</file>
         <file>pic/back2.jpg</file>
         <file>pic/back3.jpg</file>
+        <file>pic/chessboard.jpeg</file>
     </qresource>
 </RCC>
