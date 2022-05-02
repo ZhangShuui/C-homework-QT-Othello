@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     dialog.cpp \
-    mainboardwindow.cpp
+    mainboardwindow.cpp \
+    mythread.cpp
 
 HEADERS += \
         mainwindow.h \
     dialog.h \
-    mainboardwindow.h
+    mainboardwindow.h \
+    mythread.h
 
 FORMS += \
         mainwindow.ui \

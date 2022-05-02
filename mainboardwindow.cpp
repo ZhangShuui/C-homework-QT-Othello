@@ -1,6 +1,7 @@
 #include "mainboardwindow.h"
 #include "ui_mainboardwindow.h"
 #include <QMessageBox>
+
 #include "QPainter"
 #include "QLabel"
 #include "QString"
@@ -26,18 +27,24 @@ MainBoardWindow::MainBoardWindow(QWidget *parent,int level) :
             chesses[i][j] = i==j?BLACK:WHITE;
         }
     }
+    this->level =level;
+    nowrole =BLACK;
     init(level);
 }
 
 MainBoardWindow::~MainBoardWindow()
 {
+    delete label;
     delete ui;
 }
 void MainBoardWindow::init(int lev){
     this->setFixedSize(this->geometry().size());
+    valid_pos = new QVector<QPoint>();
+    valid_pos_player = new QVector<QPoint>();
+    mythread =new MyThread(this);
     gaming = false;
     clickable = false;
-    QLabel* label=new QLabel(this);
+    label=new QLabel(this);
     label->setVisible(true);
     switch (lev) {
     case 1:
@@ -100,6 +107,22 @@ void MainBoardWindow::paintEvent(QPaintEvent *event){
             }
         }
     }
+    QPen pen;
+    QVector<qreal>dashes;
+    qreal space = 4;
+    dashes << 3 << space;
+    pen.setDashPattern(dashes);
+    painter.setPen(pen);
+    if(nowrole == h_role)
+    for (int i=0;i<WIDTH;i++) {
+        for (int j = 0; j < WIDTH; ++j) {
+            QPoint p(i,j);
+            for (int k = 0; k < valid_pos_player->length(); ++k) {
+                if(p == valid_pos_player->operator[](i))
+                    painter.drawEllipse(i*100,j*100,100,100);
+            }
+        }
+    }
     painter.end();
     painter.begin(this);
     painter.drawPixmap(0,0,My_Back);
@@ -110,7 +133,270 @@ void MainBoardWindow::on_pushButton_clicked()
 {
     if(gaming)
         return;
-    gaming = true;
     int is_black = QMessageBox::question(this,tr(""),tr("作为黑棋先手？"),QMessageBox::Yes,QMessageBox::No);
+    h_role = is_black==QMessageBox::Yes? BLACK:WHITE;
+    gaming = true;
+    startgame();
+}
+//下面是投降部分代码
+void MainBoardWindow::on_pushButton_3_clicked()
+{
+    if(!gaming){
+        int ret2 = QMessageBox::information(this, tr("注意"),
+                                                tr("游戏未开始！无法进行此操作"), QMessageBox::Ok);
+    }
+}
+//下面是悔棋部分代码,已放弃
+void MainBoardWindow::on_pushButton_2_clicked()
+{
+//    if(!gaming){
+//        int ret2 = QMessageBox::information(this, tr("注意"),
+//                                                tr("游戏未开始！无法进行此操作"), QMessageBox::Ok);
+//    }
+}
+
+void MainBoardWindow::on_pushButton_4_clicked()
+{
+    gaming =false;
+    this->destroy();
+}
+
+void MainBoardWindow::mousePressEvent(QMouseEvent *event){
+    if(!clickable)
+        return;
+    check_valid_pos_player(h_role);
+    QPoint p = event->pos();
+    int m_x = p.x()/100;
+    int m_y = p.y()/100;
+    QPoint my_step(m_x,m_y);
 
 }
+
+void MainBoardWindow::check_valid_pos(int color){
+    while (!valid_pos->empty()) {
+        valid_pos->pop_back();
+    }
+    for (int i = 0; i < WIDTH; ++i) {
+        for (int j = 0; j < WIDTH; ++j) {
+            if(chesses[i][j]!=color)
+                continue;
+            int k=i;
+            int m=j;
+            int count=0;
+            while (--m>0&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m<0||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (++m<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--k>0&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k<0||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (++k<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--k>0&&--m>0&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k<0||m<0||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--k>0&&++m<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k<0||m>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--m>0&&++k<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m<0||k>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (++m<WIDTH&&++k<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m>=WIDTH||k>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos->append(QPoint(k,m));
+            }
+        }
+    }
+}
+
+void MainBoardWindow::startgame(){
+    mythread->start();
+
+
+}
+
+
+void MainBoardWindow::putchess(int color){
+    if(level==1){
+
+    }
+}
+
+
+void MainBoardWindow::check_valid_pos_player(int color){
+    while (!valid_pos_player->empty()) {
+        valid_pos_player->pop_back();
+    }
+    for (int i = 0; i < WIDTH; ++i) {
+        for (int j = 0; j < WIDTH; ++j) {
+            if(chesses[i][j]!=color)
+                continue;
+            int k=i;
+            int m=j;
+            int count=0;
+            while (--m>0&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m<0||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (++m<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--k>0&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k<0||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (++k<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--k>0&&--m>0&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k<0||m<0||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--k>0&&++m<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(k<0||m>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (--m>0&&++k<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m<0||k>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+            k=i;
+            m=j;
+            count=0;
+            while (++m<WIDTH&&++k<WIDTH&&chesses[k][m]==-color) {
+                count++;
+            }
+            if(m>=WIDTH||k>=WIDTH||chesses[k][m]==color||!count)
+                continue;
+            else {
+                valid_pos_player->append(QPoint(k,m));
+            }
+        }
+    }
+}
+
+
+void MainBoardWindow::endgame(){
+
+};
+
+
+
+
+
+
+
+
+
+
