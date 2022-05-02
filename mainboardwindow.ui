@@ -14,17 +14,76 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>800</width>
-      <height>800</height>
+      <x>840</x>
+      <y>220</y>
+      <width>151</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QWidget{background-image:url(:/pic/chessboard.jpeg)}</string>
+     <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:18px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
+    </property>
+    <property name="text">
+     <string>开始游戏</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>340</y>
+      <width>151</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:18px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
+    </property>
+    <property name="text">
+     <string>悔棋</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>460</y>
+      <width>151</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:18px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
+    </property>
+    <property name="text">
+     <string>投降</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>580</y>
+      <width>151</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:18px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
+    </property>
+    <property name="text">
+     <string>返回</string>
     </property>
    </widget>
   </widget>

@@ -4,5 +4,8 @@
         <file>pic/back2.jpg</file>
         <file>pic/back3.jpg</file>
         <file>pic/chessboard.jpeg</file>
+        <file>pic/blackchess.png</file>
+        <file>pic/whitechess.png</file>
+        <file>pic/nochess.jpeg</file>
     </qresource>
 </RCC>
