@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>220</y>
+      <y>290</y>
       <width>151</width>
       <height>71</height>
      </rect>
@@ -54,7 +54,7 @@ QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>370</y>
+      <y>440</y>
       <width>151</width>
       <height>71</height>
      </rect>
@@ -72,7 +72,7 @@ QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>530</y>
+      <y>600</y>
       <width>151</width>
       <height>71</height>
      </rect>

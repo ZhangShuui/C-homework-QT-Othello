@@ -7,27 +7,23 @@ MyThread::MyThread ( MainBoardWindow *parent ) : QThread ( parent ) {
 }
 
 void MyThread::run() {
-    int nowrole = parent->nowrole;
-    int h_role = parent->h_role;
-    bool clickable = parent->clickable;
-    bool gaming = parent->gaming;
     while (parent->gaming) {
-        parent->check_valid_pos(nowrole);
+        parent->check_valid_pos(parent->nowrole);
         if(parent->valid_pos->empty()){
-            nowrole = -nowrole;
-            parent->check_valid_pos(nowrole);
+            parent->nowrole = -parent->nowrole;
+            parent->check_valid_pos(parent->nowrole);
             if(parent->valid_pos->empty())
-                gaming=false;
+                parent->gaming=false;
             continue;
         }
-        if(nowrole!=h_role){
-           parent->putchess(nowrole);
-           clickable =true;
+        if(parent->nowrole==-parent->h_role){
+           emit rop();
+           parent->clickable = true;
+           parent->nowrole = -parent->nowrole;
         }
 
     }
     parent->endgame();
-    stop();
     quit();
 }
 
