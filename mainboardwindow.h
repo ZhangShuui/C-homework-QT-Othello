@@ -11,6 +11,10 @@
 #define WHITE 1
 #define NO_CHESS 0
 #define WIDTH 8
+#define DEFAULT 99
+
+
+
 namespace Ui {
 class MainBoardWindow;
 class MyThread;
@@ -49,7 +53,7 @@ public:
     int Level;
     explicit MainBoardWindow(QWidget *parent = nullptr);
     explicit MainBoardWindow(QWidget *parent = nullptr,int level=0);
-    void check_valid_pos(int color);
+    void check_valid_pos(int who ,int color);
     void check_valid_pos_player(int color);
     void check_valid_pos_robot(int color);
     void reverse(int x,int y);
