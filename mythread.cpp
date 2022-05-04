@@ -8,6 +8,7 @@ MyThread::MyThread ( MainBoardWindow *parent ) : QThread ( parent ) {
 
 void MyThread::run() {
     while (parent->gaming) {
+        parent->update_valid_pos(DEFAULT);
         parent->check_valid_pos(DEFAULT,parent->nowrole);
         if(parent->valid_pos->empty()){
             parent->nowrole = -parent->nowrole;

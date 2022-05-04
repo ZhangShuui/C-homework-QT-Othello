@@ -54,8 +54,9 @@ public:
     explicit MainBoardWindow(QWidget *parent = nullptr);
     explicit MainBoardWindow(QWidget *parent = nullptr,int level=0);
     void check_valid_pos(int who ,int color);
-    void check_valid_pos_player(int color);
-    void check_valid_pos_robot(int color);
+//    void check_valid_pos_player(int color);
+//    void check_valid_pos_robot(int color);
+    void update_valid_pos(int who);
     void reverse(int x,int y);
     void startgame();
     void endgame();

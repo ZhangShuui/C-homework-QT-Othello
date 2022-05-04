@@ -204,12 +204,13 @@ void MainBoardWindow::mousePressEvent(QMouseEvent *event){
             qDebug()<<m_x<<","<<m_y<<endl;
             chesses[(*i).x()][(*i).y()]= h_role;
             reverse(my_step.x(),my_step.y());
+            update_valid_pos(PLAYER);
             repaint();
+            nowrole = -nowrole;
+            clickable=false;
             break;
         }
     }
-    nowrole = -nowrole;
-    clickable=false;
 }
 
 void MainBoardWindow::check_valid_pos(int who, int color){
@@ -342,298 +343,32 @@ void MainBoardWindow::putchess(){
     srand(unsigned(time(NULL)));
     if(level==1){
         check_valid_pos(AI,-h_role);
-        int k = rand()%valid_pos_robot->length();
-        QPoint p;
-        for (auto it = valid_pos_robot->begin();it!= valid_pos_robot->end();it++) {
-            if(it == valid_pos_robot->begin()+k){
-                p = *it;
-                break;
+        if(valid_pos_robot->length()){
+            int k = rand()%valid_pos_robot->length();
+            QPoint p;
+            for (auto it = valid_pos_robot->begin();it!= valid_pos_robot->end();it++) {
+                if(it == valid_pos_robot->begin()+k){
+                    p = *it;
+                    break;
+                }
             }
+            chesses[p.x()][p.y()] = -h_role;
+            reverse(p.x(),p.y());
+            update_valid_pos(AI);
+            qDebug()<<p.x()<<","<<p.y()<<endl;
         }
-        chesses[p.x()][p.y()] = -h_role;
-        reverse(p.x(),p.y());
-        qDebug()<<p.x()<<","<<p.y()<<endl;
         repaint();
     }
 }
 
 
-void MainBoardWindow::check_valid_pos_player(int color){
-    while (!valid_pos_player->empty()) {
-        valid_pos_player->pop_back();
-    }
-    for (int i = 0; i < WIDTH; ++i) {
-        for (int j = 0; j < WIDTH; ++j) {
-            if(i==3&&j==5){
-                ;
-            }
-            if(chesses[i][j]!=color)
-                continue;
-            bool yes =false;
-            int k=i;
-            int m=j;
-            int count=0;
-            while (--m>0&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(m<0||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (++m<WIDTH&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(m>=WIDTH||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (--k>0&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(k<0||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (++k<WIDTH&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(k>=WIDTH||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (--k>0&&--m>0&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(k<0||m<0||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (--k>0&&++m<WIDTH&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(k<0||m>=WIDTH||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (--m>0&&++k<WIDTH&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(m<0||k>=WIDTH||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-            k=i;
-            m=j;
-            count=0;
-            while (++m<WIDTH&&++k<WIDTH&&chesses[k][m]==-color) {
-                count++;
-            }
-            if(m>=WIDTH||k>=WIDTH||chesses[k][m]==color||!count)
-                 ;
-            else {
-                for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                    if(*it == QPoint(k,m))
-                        {valid_pos_player->erase(it);continue;}
-                }
-                 valid_pos_player->append(QPoint(k,m));
-            }
-        }
-    }
-}
+
 
 
 void MainBoardWindow::endgame(){
 
 };
 
-//void MainBoardWindow::check_valid_pos_robot(int color){
-//    while (!valid_pos_robot->empty()) {
-//        valid_pos_robot->pop_back();
-//    }
-//    for (int i = 0; i < WIDTH; ++i) {
-//        for (int j = 0; j < WIDTH; ++j) {
-//            if(i==3&&j==5){
-//                ;
-//            }
-//            if(chesses[i][j]!=color)
-//                continue;
-//            bool yes =false;
-//            int k=i;
-//            int m=j;
-//            int count=0;
-//            while (--m>0&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(m<0||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (++m<WIDTH&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(m>=WIDTH||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (--k>0&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(k<0||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (++k<WIDTH&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(k>=WIDTH||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (--k>0&&--m>0&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(k<0||m<0||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (--k>0&&++m<WIDTH&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(k<0||m>=WIDTH||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (--m>0&&++k<WIDTH&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(m<0||k>=WIDTH||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//            k=i;
-//            m=j;
-//            count=0;
-//            while (++m<WIDTH&&++k<WIDTH&&chesses[k][m]==-color) {
-//                count++;
-//            }
-//            if(m>=WIDTH||k>=WIDTH||chesses[k][m]==color||!count)
-//                 ;
-//            else {
-//                for (auto it = valid_pos_robot->begin();it != valid_pos_robot->end();it++) {
-//                    if(*it == QPoint(k,m))
-//                        {valid_pos_robot->erase(it);continue;}
-//                }
-//                 valid_pos_robot->append(QPoint(k,m));
-//            }
-//        }
-//    }
-//}
 
 void MainBoardWindow::reverse(int i, int j){
     int k = i;
@@ -746,7 +481,17 @@ void MainBoardWindow::reverse(int i, int j){
 }
 
 
-
+void MainBoardWindow::update_valid_pos(int who){
+    QVector<QPoint>* valid_pos;
+    switch (who) {
+    case PLAYER: valid_pos = valid_pos_player;
+    case AI: valid_pos = valid_pos_robot;
+    case DEFAULT: valid_pos = this->valid_pos;
+    }
+    while (!valid_pos->empty()) {
+        valid_pos->pop_back();
+    }
+}
 
 
 
