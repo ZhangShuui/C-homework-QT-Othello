@@ -7,7 +7,7 @@
 #include "QString"
 #include <stdlib.h>
 #include <time.h>
-
+#include "mcts_pyqt.h"
 #define PLAYER 100
 #define AI 101
 #define PAINT 102
@@ -382,6 +382,14 @@ void MainBoardWindow::putchess(){
 
         }
         repaint();
+    }else if(level == 3){
+        QString* str=new QString();
+        for (int i=0;i<WIDTH;i++) {
+            for (int j=0;j<WIDTH;j++) {
+                str->append(QString("%1 ").arg(chesses[i][j]));
+            }
+        }
+        MCTS_pyqt py_exec("");
     }
     putting_chess = false;
     clickable = true;
