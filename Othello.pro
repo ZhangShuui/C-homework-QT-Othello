@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
     dialog.cpp \
     mainboardwindow.cpp \
-    mythread.cpp
+    mythread.cpp \
+    mcts_pyqt.cpp
 
 HEADERS += \
         mainwindow.h \
     dialog.h \
     mainboardwindow.h \
-    mythread.h
+    mythread.h \
+    mcts_pyqt.h
 
 FORMS += \
         mainwindow.ui \
@@ -48,7 +50,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    background.jpeg
+    background.jpeg \
+    board.py \
+    game.py \
+    main.py
 
 RESOURCES += \
     res.qrc
+
+INCLUDEPATH += C:/Users/zsr/AppData/Local/Programs/Python/Python37/include
+
+LIBS += -LC:/Users/zsr/AppData/Local/Programs/Python/Python37/libs -lpython37

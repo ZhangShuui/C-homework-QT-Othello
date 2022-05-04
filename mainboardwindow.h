@@ -32,6 +32,9 @@ private:
     volatile bool stopped;
 signals:
     void rop();
+    void repp();
+
+
 public slots:
 };
 
@@ -40,6 +43,7 @@ class MainBoardWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    bool putting_chess;
     bool clickable;
     bool gaming;
     QLabel* label;
@@ -47,6 +51,7 @@ public:
     QVector<QPoint>* valid_pos;
     QVector<QPoint>* valid_pos_player;
     QVector<QPoint>* valid_pos_robot;
+    QVector<QPoint>* valid_pos_paint;
     MyThread* mythread;
     int h_role;
     int nowrole;
@@ -59,18 +64,18 @@ public:
     void update_valid_pos(int who);
     void reverse(int x,int y);
     void startgame();
-    void endgame();
+
     ~MainBoardWindow();
     void init(int level=0);
 
 protected:
     void paintEvent(QPaintEvent* event);
     void mousePressEvent(QMouseEvent *event);
-private slots:
+public slots:
     void on_pushButton_clicked();
     void putchess();
     void on_pushButton_3_clicked();
-
+    void endgame();
     void on_pushButton_2_clicked();
 
     void on_pushButton_4_clicked();

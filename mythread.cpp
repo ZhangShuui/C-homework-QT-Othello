@@ -4,6 +4,7 @@
 MyThread::MyThread ( MainBoardWindow *parent ) : QThread ( parent ) {
     stopped = false;
     this->parent = parent;
+
 }
 
 void MyThread::run() {
@@ -17,14 +18,13 @@ void MyThread::run() {
                 parent->gaming=false;
             continue;
         }
-        if(parent->nowrole==-parent->h_role){
+        if(parent->nowrole==-parent->h_role&&!parent->putting_chess){
            emit rop();
-           parent->clickable = true;
-           parent->nowrole = -parent->nowrole;
         }
 
     }
-    parent->endgame();
+    emit repp();
+//    parent->endgame();
     quit();
 }
 
