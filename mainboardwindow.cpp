@@ -505,7 +505,7 @@ void MainBoardWindow::endgame(){
     delete valid_pos_player;
     delete valid_pos_paint;
     delete effect;
-
+    delete now_role;
     init();
 };
 
@@ -771,12 +771,14 @@ void MainBoardWindow::update_time(){
 }
 
 void MainBoardWindow::update_board(int a){
-    int x = a/10;
-    int y = a%10;
-    chesses[x][y] = -h_role;
-    nowrole = -nowrole;
-    putting_chess = false;
-    clickable = true;
-    reverse(x,y);
-    repaint();
+    if(gaming){
+        int x = a/10;
+        int y = a%10;
+        chesses[x][y] = -h_role;
+        nowrole = -nowrole;
+        putting_chess = false;
+        clickable = true;
+        reverse(x,y);
+        repaint();
+    }
 }
