@@ -4,7 +4,7 @@ MCTS_pyqt::MCTS_pyqt(const char* module)
 {
     Py_Initialize();
     PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append('./')");
+    PyRun_SimpleString("sys.path.append('C://Users//zsr//Documents//Othello//')");
     if(!Py_IsInitialized()){
         qDebug() << __FUNCTION__ << "song" << "py init fail";
         return;
@@ -30,10 +30,26 @@ bool MCTS_pyqt::callPyFunc(const char * func, const QVariantList &args, QVariant
     for (int i=0; i<args.size();++i) {
         QVariant arg = args.at(i);
         if(arg.type() ==QVariant::String){
-            PyTuple_SetItem(pArgs , i, Py_BuildValue("s", arg.toString().toStdString().c_str()));
+            QString str = arg.toString();
+            std::string str2 = str.toStdString();
+            const char *ch = str2.c_str();
+            PyTuple_SetItem(pArgs , i, Py_BuildValue("s", ch));
+        }else if(arg.type() ==QVariant::Int){
+            PyTuple_SetItem(pArgs, i, Py_BuildValue("i", arg.toInt()));
         }
     }
-
-
-
+    auto pReturn = PyObject_CallObject(pyFunc,pArgs);
+    if(backvar){
+        if(backvar->type()==QVariant::String){
+            char *s = nullptr;
+            PyArg_Parse(pReturn, "s", &s);
+            QString str(s);
+            *backvar = QVariant::fromValue(str);
+        }else if(backvar->type()==QVariant::Int){
+            int nResult;
+            PyArg_Parse(pReturn, "i", &nResult);
+            *backvar = QVariant::fromValue(nResult);
+        }
+    }
+    return pReturn!=nullptr;
 }

@@ -105,7 +105,7 @@ class AIPlayer:
 
         start = datetime.datetime.now()
         end = datetime.datetime.now()
-        while (end - start).seconds < 5:
+        while (end - start).seconds < 8:
             v_select = self.select_policy(v0)
             v_expand = self.expand(v_select)
             quality = self.simulate_policy(v_expand)

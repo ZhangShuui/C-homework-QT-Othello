@@ -89,6 +89,7 @@ void MainBoardWindow::init(int lev){
         break;
     case 3:
         label->setText("HARD MODE");
+        Hard_AI = new MCTS_pyqt("main");
         break;
     }
     QFont ft("Microsoft YaHei",18);
@@ -151,9 +152,9 @@ void MainBoardWindow::paintEvent(QPaintEvent *event){
         pen.setWidth(4);
         painter.setPen(pen);
         check_valid_pos(PAINT,h_role);
-        qDebug()<<"paint";
+
         for (auto k = valid_pos_paint->begin();k!=valid_pos_paint->end();k++) {
-            qDebug()<<*k;
+
             int x = (*k).x();
             int y = (*k).y();
             painter.drawEllipse(x*100,y*100,100,100);
@@ -220,10 +221,6 @@ void MainBoardWindow::mousePressEvent(QMouseEvent *event){
             chesses[(*i).x()][(*i).y()]= h_role;
             reverse(my_step.x(),my_step.y());
              (PLAYER);
-            qDebug()<<"player:";
-            for (auto it = valid_pos_player->begin();it != valid_pos_player->end();it++) {
-                qDebug()<<*it<<"";
-            }
             repaint();
             nowrole = -nowrole;
             clickable=false;
@@ -363,6 +360,7 @@ void MainBoardWindow::startgame(){
 
 void MainBoardWindow::putchess(){
     putting_chess =true;
+    repaint();
     srand(unsigned(time(NULL)));
     if(level==1){
          (AI);
@@ -389,11 +387,34 @@ void MainBoardWindow::putchess(){
                 str->append(QString("%1 ").arg(chesses[i][j]));
             }
         }
-        MCTS_pyqt py_exec("");
+        int col = -h_role==BLACK?1:-1;
+        str->append(QString("%1").arg(col));
+        QVariantList* ql =new QVariantList();
+        ql->append(*str);
+        QVariant* bak = new QVariant(" ");
+        bool okk = Hard_AI->callPyFunc("use",*ql, bak);
+        if(bak==nullptr){
+            qDebug()<<*str;
+            qDebug()<<"wandanle";
+        }else if (!okk) {
+            qDebug()<<*str;
+            qDebug()<<"wandanle";
+        }
+        else {
+            qDebug()<<*bak;
+            char x = bak->toString().toStdString().at(0);
+            char y = bak->toString().toStdString().at(1);
+            int xx = x-'A';
+            int yy = y-'1';
+            chesses[yy][xx] = -h_role;
+            reverse(yy,xx);
+            repaint();
+        }
     }
     putting_chess = false;
     clickable = true;
     nowrole = -nowrole;
+    repaint();
 }
 
 

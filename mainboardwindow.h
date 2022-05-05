@@ -7,8 +7,9 @@
 #include <QThread>
 #include <QLabel>
 #include <QMouseEvent>
-#define BLACK -1
-#define WHITE 1
+#include "mcts_pyqt.h"
+#define BLACK 1
+#define WHITE -1
 #define NO_CHESS 0
 #define WIDTH 8
 #define DEFAULT 99
@@ -56,6 +57,7 @@ public:
     int h_role;
     int nowrole;
     int Level;
+    MCTS_pyqt* Hard_AI;
     explicit MainBoardWindow(QWidget *parent = nullptr);
     explicit MainBoardWindow(QWidget *parent = nullptr,int level=0);
     void check_valid_pos(int who ,int color);

@@ -19,6 +19,7 @@ void MyThread::run() {
             continue;
         }
         if(parent->nowrole==-parent->h_role&&!parent->putting_chess){
+           parent->putting_chess=true;
            emit rop();
         }
 
