@@ -18,14 +18,14 @@
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>290</y>
+      <y>320</y>
       <width>151</width>
       <height>71</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
-QAbstractButton{border-radius:18px}
+QAbstractButton{border-radius:22px}
 QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     </property>
     <property name="text">
@@ -54,14 +54,14 @@ QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>440</y>
+      <y>430</y>
       <width>151</width>
       <height>71</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
-QAbstractButton{border-radius:18px}
+QAbstractButton{border-radius:22px}
 QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     </property>
     <property name="text">
@@ -72,18 +72,45 @@ QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>600</y>
+      <y>540</y>
       <width>151</width>
       <height>71</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
-QAbstractButton{border-radius:18px}
+QAbstractButton{border-radius:22px}
 QAbstractButton{background-color:rgb(214, 214, 214)}</string>
     </property>
     <property name="text">
      <string>返回</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="soundButton">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>660</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QAbstractButton{font: 16pt &quot;幼圆&quot;;}
+QAbstractButton{border-radius:22px}
+QAbstractButton{background-color:rgb(214, 214, 214)}</string>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset theme=":/pic/soundoff.png"/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
     </property>
    </widget>
   </widget>

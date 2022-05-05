@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +31,10 @@ SOURCES += \
     dialog.cpp \
     mainboardwindow.cpp \
     mythread.cpp \
-    mcts_pyqt.cpp
+    mcts_pyqt.cpp \
+    timethread.cpp \
+    aithread.cpp \
+    soundthread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +57,9 @@ DISTFILES += \
     background.jpeg \
     board.py \
     game.py \
-    main.py
+    main.py \
+    pic/black.png \
+    pic/music.wav
 
 RESOURCES += \
     res.qrc

@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include "mcts_pyqt.h"
+#include "QSoundEffect"
 #define BLACK 1
 #define WHITE -1
 #define NO_CHESS 0
@@ -19,6 +20,8 @@
 namespace Ui {
 class MainBoardWindow;
 class MyThread;
+class TimeThread;
+class AiThread;
 }
 class MainBoardWindow;
 class MyThread : public QThread {
@@ -38,21 +41,76 @@ signals:
 
 public slots:
 };
+class TimeThread : public QThread {
+    Q_OBJECT
+public:
+    MainBoardWindow* parent;
+    explicit TimeThread ( MainBoardWindow *parent = 0 );
+    void stop();
+protected:
+    void run();
+private:
+    volatile bool stopped;
+signals:
+    void record();
 
+
+public slots:
+};
+class AiThread : public QThread {
+    Q_OBJECT
+public:
+    MainBoardWindow* parent;
+    explicit AiThread ( MainBoardWindow *parent = 0 );
+    void stop();
+protected:
+    void run();
+private:
+    volatile bool stopped;
+signals:
+    void reeee(int a);
+
+
+public slots:
+};
+class SoundThread : public QThread {
+    Q_OBJECT
+public:
+    MainBoardWindow* parent;
+    explicit SoundThread ( MainBoardWindow *parent = 0 );
+    void stop();
+protected:
+    void run();
+private:
+    volatile bool stopped;
+signals:
+    void reeee(int a);
+
+
+public slots:
+};
 class MainBoardWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    int time_count;
     bool putting_chess;
     bool clickable;
     bool gaming;
+    bool playing;
+    QSoundEffect *effect;
     QLabel* label;
-    QLabel* role;
+    QLabel* now_role;
+    QLabel* time_label;
+    int evaluate(QPoint pp);
     QVector<QPoint>* valid_pos;
     QVector<QPoint>* valid_pos_player;
     QVector<QPoint>* valid_pos_robot;
     QVector<QPoint>* valid_pos_paint;
+    TimeThread* timethread;
+    AiThread* aithread;
+    SoundThread* sthread;
     MyThread* mythread;
     int h_role;
     int nowrole;
@@ -66,7 +124,7 @@ public:
     void update_valid_pos(int who);
     void reverse(int x,int y);
     void startgame();
-
+    int chesses[8][8];
     ~MainBoardWindow();
     void init(int level=0);
 
@@ -79,12 +137,12 @@ public slots:
     void on_pushButton_3_clicked();
     void endgame();
     void on_pushButton_2_clicked();
-
+    void update_time();
     void on_pushButton_4_clicked();
-
+    void update_board(int );
 private:
     Ui::MainBoardWindow *ui;
-    int chesses[8][8];
+
     int mycolor;
     int level;
 
