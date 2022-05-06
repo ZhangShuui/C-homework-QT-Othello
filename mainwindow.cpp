@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->pushButton_2,&QPushButton::clicked,this,&MainWindow::close);
 }
 
 MainWindow::~MainWindow()
@@ -22,4 +23,5 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     this->destroy();
+
 }

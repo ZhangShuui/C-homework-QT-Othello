@@ -56,7 +56,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     background.jpeg \
     board.py \
-    game.py \
     main.py \
     pic/black.png \
     pic/music.wav
